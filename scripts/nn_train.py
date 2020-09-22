@@ -1,10 +1,21 @@
 from fastai import *
 import numpy as np
+import pandas as pd
 
-raw_data = pd.read_csv('data/raw/heloc_dataset_v1.csv', delimiter=',')
-variable_names = list(raw_data.columns[1:])
+train = pd.read_csv('data/preprocessed/train.csv')
+test = pd.read_csv('data/preprocessed/test.csv')
 
-X_train = np.genfromtxt('data/preprocessed/X_train.csv', delimiter=',')
-X_test = np.genfromtxt('data/preprocessed/X_test.csv', delimiter=',')
-y_train = np.genfromtxt('data/preprocessed/y_train.csv', delimiter=',')
-y_test = np.genfromtxt('data/preprocessed/y_test.csv', delimiter=',')
+variable_names = list(train.columns[1:])
+
+cont_names = variable_names
+
+procs = [FillMissing, Categorify, Normalize]
+
+test = TabularList.from_df(raw_data, cat_names=[], cont_names=cont_names, procs=procs)
+
+data = (TabularList.from_df(train, path='.', cat_names=[], cont_names=cont_names, procs=procs).split_by_idx(list(range(0,200)))
+        .label_from_df(cols=dep_var)
+        .add_test(test, label=0)
+        .databunch())
+
+data.show_batch(rows=10)
