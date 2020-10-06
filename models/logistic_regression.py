@@ -3,9 +3,11 @@ from optbinning import BinningProcess
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
-class LogisticRegression:
+class LogisticRegressionClf:
     def __init__(self):
         special_codes = [-9, -8, -7]
+
+        variable_names = ['ExternalRiskEstimate', 'MSinceOldestTradeOpen', 'MSinceMostRecentTradeOpen', 'AverageMInFile', 'NumSatisfactoryTrades', 'NumTrades60Ever2DerogPubRec', 'NumTrades90Ever2DerogPubRec', 'PercentTradesNeverDelq', 'MSinceMostRecentDelq', 'MaxDelq2PublicRecLast12M', 'MaxDelqEver', 'NumTotalTrades', 'NumTradesOpeninLast12M', 'PercentInstallTrades', 'MSinceMostRecentInqexcl7days', 'NumInqLast6M', 'NumInqLast6Mexcl7days', 'NetFractionRevolvingBurden', 'NetFractionInstallBurden', 'NumRevolvingTradesWBalance', 'NumInstallTradesWBalance', 'NumBank2NatlTradesWHighUtilization', 'PercentTradesWBalance']
         binning_fit_params = {
             "ExternalRiskEstimate": {"monotonic_trend": "descending"},
             "MSinceOldestTradeOpen": {"monotonic_trend": "descending"},
@@ -40,7 +42,7 @@ class LogisticRegression:
         return y_pred
 
     def get_model(self):
-        return self.rf
+        return self.lr
 
     def get_model_name(self):
-        return self.title
+        return self.model_name

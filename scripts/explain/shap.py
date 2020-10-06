@@ -4,7 +4,12 @@ class Shap:
     def __init__(self, model_type, model, background=None, category=None):
         shap.initjs()
         self.model_type = model_type
-        self.explainer = shap.KernelExplainer(model)
+        if model_type == "XGBoost":
+            self.explainer = shap.TreeExplainer(model)
+        elif model_type == "Neural Net":
+            self.explainer = shap.DeepExplainer(model, background)
+        else:
+            self.explainer = shap.KernelExplainer(model, background)
         self.category = category
         self.shap_values = None
         self.expected_value = None

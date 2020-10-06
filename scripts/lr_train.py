@@ -19,7 +19,6 @@ y_test = np.genfromtxt('data/preprocessed/y_test.csv', delimiter=',')
 
 special_codes = [-9, -8, -7]
 
-
 binning_fit_params = {
     "ExternalRiskEstimate": {"monotonic_trend": "descending"},
     "MSinceOldestTradeOpen": {"monotonic_trend": "descending"},
