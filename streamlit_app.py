@@ -2,6 +2,7 @@ import numpy as np
 import streamlit as st
 import altair as alt
 from sklearn.model_selection import train_test_split
+import webbrowser
 import argparse
 import os
 
@@ -71,6 +72,12 @@ def update_feature_value(data):
                                   min_value=int(-9),
                                   max_value=int(100),
                                   value = int(v))
+        if k == "NetFractionRevolvingBurden":
+            url = "https://www.credit.com/blog/what-is-revolving-utilization/#:~:text=Revolving%20utilization%2C%20also%20known%20as,using%20at%20a%20given%20time."
+            whats_this_button = st.sidebar.button("What's revovlving credit?")
+            if whats_this_button:
+                webbrowser.open_new_tab(url)
+
         if new_v:
             data[k] = new_v
     return data
